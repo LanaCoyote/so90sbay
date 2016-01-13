@@ -1,4 +1,4 @@
-/*
+/* Hello, world!
 
 This seed file is only a placeholder. It should be expanded and altered
 to fit the development of your application.
