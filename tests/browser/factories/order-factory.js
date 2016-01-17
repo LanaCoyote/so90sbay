@@ -8,11 +8,18 @@ describe('OrderFactory', function() {
   beforeEach(module('FullstackGeneratedApp'));
   beforeEach(module('uiRouterNoop'));
 
-  var $httpBackend;
-  var $rootScope;
-  beforeEach('Inject tools', inject( function (_$httpBackend_, _$rootScope_) {
-    $httpBackend = _$httpBackend_;
-    $rootScope = _$rootScope_;
+  // var $httpBackend;
+  // var $rootScope;
+  // beforeEach('Inject tools', inject( function (_$httpBackend_, _$rootScope_) {
+  //   $httpBackend = _$httpBackend_;
+  //   $rootScope = _$rootScope_;
+  // }));
+
+  var httpMock;
+  var scope;
+   beforeEach('Inject tools', inject( function (_$httpBackend_, _$rootScope_) {
+    httpMock = $httpBackend;
+    scope = $rootScope.$new();
   }));
 
   var OrderFactory;
@@ -27,14 +34,14 @@ describe('OrderFactory', function() {
   describe('API endpoints', function () {
 
     afterEach( function () {
-      $httpBackend.verifyNoOutstandingExpectation();
-      $httpBackend.verifyNoOutstandingRequest();
+      httpMock.verifyNoOutstandingExpectation();
+      httpMock.verifyNoOutstandingRequest();
     });
 
     it('should GET /api/orders when calling fetchAll', function(done) {
 
-      $httpBackend.expectGET('/api/orders');
-      $httpBackend.whenGET('/api/orders').respond([{ works: true }]);
+      httpMock.expectGET('/api/orders');
+      httpMock.whenGET('/api/orders').respond([{ works: true }]);
 
       OrderFactory.fetchAll().then( function( orders ) {
 
@@ -43,14 +50,14 @@ describe('OrderFactory', function() {
 
       });
 
-      $httpBackend.flush();
+      httpMock.flush();
 
     });
 
     it('should return undefined if it\'s unauthorized', function(done) {
 
-      $httpBackend.expectGET('/api/orders');
-      $httpBackend.whenGET('/api/orders').respond( 401, {} );
+      httpMock.expectGET('/api/orders');
+      httpMock.whenGET('/api/orders').respond( 401, {} );
 
       OrderFactory.fetchAll().then( function( orders ) {
 
@@ -59,7 +66,7 @@ describe('OrderFactory', function() {
 
       });
 
-      $httpBackend.flush();
+      httpMock.flush();
 
     });
 
