@@ -17,7 +17,7 @@ describe('OrderFactory', function() {
 
   var httpMock;
   var scope;
-   beforeEach('Inject tools', inject( function (_$httpBackend_, _$rootScope_) {
+   beforeEach('Inject tools', inject( function ($httpBackend, $rootScope) {
     httpMock = $httpBackend;
     scope = $rootScope.$new();
   }));
